@@ -25,6 +25,7 @@ export default () => {
       document.body.style.backgroundColor="#0E5AE5"
       new Login({ document, localStorage, onNavigate, PREVIOUS_LOCATION, store })
     } else if (pathname === ROUTES_PATH['Bills']) {
+      console.log("|=== [ PATH: employee bills ] ===|");
       rootDiv.innerHTML = ROUTES({ pathname, loading: true })
       const divIcon1 = document.getElementById('layout-icon1')
       const divIcon2 = document.getElementById('layout-icon2')
@@ -42,6 +43,7 @@ export default () => {
         rootDiv.innerHTML = ROUTES({ pathname, error })
       })
     } else if (pathname === ROUTES_PATH['NewBill']) {
+      console.log("|=== [ PATH: employee newBill ] ===|");
       rootDiv.innerHTML = ROUTES({ pathname, loading: true })
       new NewBill({ document, onNavigate, store, localStorage })
       const divIcon1 = document.getElementById('layout-icon1')
@@ -49,6 +51,7 @@ export default () => {
       divIcon1.classList.remove('active-icon')
       divIcon2.classList.add('active-icon')
     } else if (pathname === ROUTES_PATH['Dashboard']) {
+      console.log("|=== [ PATH: admin dashboard ] ===|");
       rootDiv.innerHTML = ROUTES({ pathname, loading: true })
       const bills = new Dashboard({ document, onNavigate, store, bills: [], localStorage })
       bills.getBillsAllUsers().then(bills => {
@@ -76,6 +79,7 @@ export default () => {
     document.body.style.backgroundColor="#0E5AE5"
   } else if (window.location.hash !== "") {
     if (window.location.hash === ROUTES_PATH['Bills']) {
+      console.log("|=== [ PATH: admin bills ] ===|");
       rootDiv.innerHTML = ROUTES({ pathname: window.location.hash, loading: true })
       const divIcon1 = document.getElementById('layout-icon1')
       const divIcon2 = document.getElementById('layout-icon2')
@@ -93,6 +97,7 @@ export default () => {
         rootDiv.innerHTML = ROUTES({ pathname: window.location.hash, error })
       })
     } else if (window.location.hash === ROUTES_PATH['NewBill']) {
+      console.log("|=== [ PATH: admin newBill ] ===|");
       rootDiv.innerHTML = ROUTES({ pathname: window.location.hash, loading: true })
       new NewBill({ document, onNavigate, store, localStorage })
       const divIcon1 = document.getElementById('layout-icon1')
@@ -100,6 +105,7 @@ export default () => {
       divIcon1.classList.remove('active-icon')
       divIcon2.classList.add('active-icon')
     } else if (window.location.hash === ROUTES_PATH['Dashboard']) {
+      console.log("|=== [ PATH: employee dashboard ] ===|");
       rootDiv.innerHTML = ROUTES({ pathname: window.location.hash, loading: true })
       const bills = new Dashboard({ document, onNavigate, store, bills: [], localStorage })
       bills.getBillsAllUsers().then(bills => {
