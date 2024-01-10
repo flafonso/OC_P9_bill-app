@@ -87,29 +87,34 @@ export default class {
 
   handleEditTicket(e, bill, bills) {
     console.log("+++ handleEditTicket() +++")
-    console.log("++++++")
-    if (this.counter === undefined || this.id !== bill.id) this.counter = 0
+    console.log(`this.counterEdit = ${this.counterEdit}`)
+    console.log(`this.id = ${this.id}`)
+    if (this.counterEdit === undefined || this.id !== bill.id) this.counterEdit = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
-    if (this.counter % 2 === 0) {
+    console.log(`__this.counterEdit = ${this.counterEdit}`)
+    console.log(`__this.id = ${this.id}`)
+    if (this.counterEdit % 2 === 0) {
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
       })
       $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
       $('.dashboard-right-container div').html(DashboardFormUI(bill))
       $('.vertical-navbar').css({ height: '150vh' })
-      this.counter ++
+      this.counterEdit ++
     } else {
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
-
+      
       $('.dashboard-right-container div').html(`
-        <div id="big-billed-icon" data-testid="big-billed-icon"> ${BigBilledIcon} </div>
+      <div id="big-billed-icon" data-testid="big-billed-icon"> ${BigBilledIcon} </div>
       `)
       $('.vertical-navbar').css({ height: '120vh' })
-      this.counter ++
+      this.counterEdit ++
     }
     $('#icon-eye-d').click(this.handleClickIconEye)
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
     $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
+    console.log(`_____this.counterEdit = ${this.counterEdit}`)
+    console.log("++++++")
   }
 
   handleAcceptSubmit = (e, bill) => {
@@ -133,30 +138,39 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
-    if (this.counter === undefined || this.index !== index) this.counter = 0
-    if (this.index === undefined || this.index !== index) this.index = index
     console.log("--- handleShowTickets() ---")
     console.log(`this.counter = ${this.counter}`)
+    console.log(`this.index = ${this.index}`)
     console.log(`index = ${index}`)
-    console.log(`bills = ${bills}`)
-    console.log("------")
+    if (this.counter === undefined || this.index !== index) {
+      if ($(`#status-bills-container${index}`).html().trim() === "") {
+        this.counter = 0
+      } else {
+        this.counter = 1
+      }
+    }
+    if (this.index === undefined || this.index !== index) this.index = index
+    console.log(`__this.counter = ${this.counter}`)
+    console.log(`__this.index = ${this.index}`)
     if (this.counter % 2 === 0) {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})
       $(`#status-bills-container${this.index}`)
-        .html(cards(filteredBills(bills, getStatus(this.index))))
+      .html(cards(filteredBills(bills, getStatus(this.index))))
       this.counter ++
     } else {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
       $(`#status-bills-container${this.index}`)
-        .html("")
+      .html("")
       this.counter ++
     }
-
+    console.log(`_____this.counter = ${this.counter}`)
+    
     bills.forEach(bill => {
       // here we specify the current container in the querySelector so as not to redo an eventListener on the open-bills of the other containers opened previously
       $(`#status-bills-container${this.index} #open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
-
+    
+    console.log("------")
     return bills
 
   }
