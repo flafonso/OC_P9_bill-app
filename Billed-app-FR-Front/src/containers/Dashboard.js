@@ -86,6 +86,8 @@ export default class {
   }
 
   handleEditTicket(e, bill, bills) {
+    console.log("+++ handleEditTicket() +++")
+    console.log("++++++")
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
     if (this.counter % 2 === 0) {
@@ -133,6 +135,11 @@ export default class {
   handleShowTickets(e, bills, index) {
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
+    console.log("--- handleShowTickets() ---")
+    console.log(`this.counter = ${this.counter}`)
+    console.log(`index = ${index}`)
+    console.log(`bills = ${bills}`)
+    console.log("------")
     if (this.counter % 2 === 0) {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})
       $(`#status-bills-container${this.index}`)
@@ -146,7 +153,8 @@ export default class {
     }
 
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      // here we specify the current container in the querySelector so as not to redo an eventListener on the open-bills of the other containers opened previously
+      $(`#status-bills-container${this.index} #open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
 
     return bills
