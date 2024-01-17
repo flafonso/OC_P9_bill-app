@@ -16,6 +16,7 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate })
   }
   handleChangeFile = e => {
+    console.log("--- handleChangeFile() ---")
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
@@ -24,7 +25,18 @@ export default class NewBill {
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
+    console.log(`file : ${file}`)
+    console.log(`file.type : ${file.type}`)
+    console.log(`filePath : ${filePath}`)
+    console.log(`e.target : ${e.target}`)
+    console.log(`this.document.querySelector : ${this.document.querySelector(`input[data-testid="file"]`)}`)
 
+    // if (!["image/jpeg", "image/jpg", "image/png"].includes(file.type)) {
+    //   this.document.querySelector(`input[data-testid="file"]`).value = ""
+    //   console.log("Le type de fichier n'est pas bon")
+    //   return 
+    // }
+    
     this.store
       .bills()
       .create({
@@ -34,11 +46,12 @@ export default class NewBill {
         }
       })
       .then(({fileUrl, key}) => {
-        console.log(fileUrl)
+        console.log(`fileUrl : ${fileUrl}`)
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
+      console.log("--- ---")
   }
   handleSubmit = e => {
     e.preventDefault()
