@@ -22,11 +22,24 @@
   border-radius: 5px;
 }
 
-label {
+.red-border {
+  opacity: 0.5;
+  border: 2px solid red !important;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+label, #error-msg__input-file {
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
+}
+
+#error-msg__input-file {
+  margin-top: 5px;
+  display: none;
+  color: red;
 }
 
 .flex-col {

@@ -18,6 +18,7 @@ export default class NewBill {
   handleChangeFile = e => {
     console.log("--- handleChangeFile() ---")
     e.preventDefault()
+    const errorMsg = document.querySelector("#error-msg__input-file")
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
@@ -29,13 +30,18 @@ export default class NewBill {
     console.log(`file.type : ${file.type}`)
     console.log(`filePath : ${filePath}`)
     console.log(`e.target : ${e.target}`)
-    console.log(`this.document.querySelector : ${this.document.querySelector(`input[data-testid="file"]`)}`)
 
-    // if (!["image/jpeg", "image/jpg", "image/png"].includes(file.type)) {
-    //   this.document.querySelector(`input[data-testid="file"]`).value = ""
-    //   console.log("Le type de fichier n'est pas bon")
-    //   return 
-    // }
+    if (!["image/jpeg", "image/jpg", "image/png"].includes(file.type)) {
+      e.target.value = ""
+      e.target.classList.remove("blue-border") 
+      e.target.classList.add("red-border") 
+      errorMsg.style.display = "block"
+      return
+    } else {
+      e.target.classList.remove("red-border") 
+      e.target.classList.add("blue-border") 
+      errorMsg.style.display = "none"
+    }
     
     this.store
       .bills()
@@ -54,6 +60,7 @@ export default class NewBill {
       console.log("--- ---")
   }
   handleSubmit = e => {
+    console.log("+++ handleChangeFile() +++")
     e.preventDefault()
     console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(localStorage.getItem("user")).email
@@ -72,6 +79,7 @@ export default class NewBill {
     }
     this.updateBill(bill)
     this.onNavigate(ROUTES_PATH['Bills'])
+    console.log("+++ +++")
   }
 
   // not need to cover this function by tests
