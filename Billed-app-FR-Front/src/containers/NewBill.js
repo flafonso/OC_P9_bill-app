@@ -16,7 +16,7 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate })
   }
   handleChangeFile = e => {
-    console.log("--- handleChangeFile() ---")
+    // console.log("--- handleChangeFile() ---")
     e.preventDefault()
     const errorMsg = document.querySelector("#error-msg__input-file")
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
@@ -26,13 +26,13 @@ export default class NewBill {
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
-    console.log(`file : ${file}`)
-    console.log(`file.type : ${file.type}`)
-    console.log(`filePath : ${filePath}`)
-    console.log(`e.target : ${e.target}`)
+    // console.log(`file : ${file}`)
+    // console.log(`file.type : ${file.type}`)
+    // console.log(`filePath : ${filePath}`)
+    // console.log(`e.target : ${e.target}`)
 
     if (!["image/jpeg", "image/jpg", "image/png"].includes(file.type)) {
-      e.target.value = ""
+      e.target.value = null
       e.target.classList.remove("blue-border") 
       e.target.classList.add("red-border") 
       errorMsg.style.display = "block"
@@ -52,17 +52,17 @@ export default class NewBill {
         }
       })
       .then(({fileUrl, key}) => {
-        console.log(`fileUrl : ${fileUrl}`)
+        // console.log(`fileUrl : ${fileUrl}`)
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
-      console.log("--- ---")
+      // console.log("--- ---")
   }
   handleSubmit = e => {
-    console.log("+++ handleChangeFile() +++")
+    // console.log("+++ handleChangeFile() +++")
     e.preventDefault()
-    console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
+    // console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(localStorage.getItem("user")).email
     const bill = {
       email,
@@ -79,7 +79,7 @@ export default class NewBill {
     }
     this.updateBill(bill)
     this.onNavigate(ROUTES_PATH['Bills'])
-    console.log("+++ +++")
+    // console.log("+++ +++")
   }
 
   // not need to cover this function by tests

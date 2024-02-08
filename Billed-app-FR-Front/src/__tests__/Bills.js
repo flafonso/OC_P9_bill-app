@@ -8,17 +8,16 @@ import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import { ROUTES_PATH, ROUTES} from "../constants/routes.js"
 import {localStorageMock} from "../__mocks__/localStorage.js"
-import mockStore from "../__mocks__/store"
+import mockStore from "../__mocks__/store.js"
 import { log } from "console"
 
 import router from "../app/Router.js"
 import Bills from "../containers/Bills.js"
-jest.mock("../app/store", () => mockStore)
+jest.mock("../app/Store.js", () => mockStore)
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
-
-    test("Then bill icon in vertical layout should be highlighted", async () => {
+    test("Then icon-window in vertical layout should be highlighted", async () => {
 
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({
@@ -49,8 +48,7 @@ describe("Given I am connected as an employee", () => {
 
 describe("Given I am on Bills Page", () => {
   describe("When I click on the new bill button", () => {
-
-    test("Then call onNavigate with ROUTES_PATH.Bills", () => {
+    test("Then I will be redirected to the bills page", () => {
       // *Given : create a Bills class
       const onNavigate = jest.fn()
       // log(`onNavigate: ${onNavigate}`)
@@ -103,16 +101,10 @@ describe("Given I am on Bills Page", () => {
   })
 })
 
-
-
-
-
-
-
 describe("Given I am a user connected as employee", () => {
   describe("When I navigate to Bills Page", () => {
     test("Then it fetches bills from mock API GET", async () => {
-      localStorage.setItem("user", JSON.stringify({ type: "employee", email: "employee@test.com" }));
+      localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "employee@test.com" }));
       const root = document.createElement("div")
       root.setAttribute("id", "root")
       document.body.append(root)
@@ -145,7 +137,7 @@ describe("Given I am a user connected as employee", () => {
         jest.spyOn(mockStore, "bills")
         Object.defineProperty(window, 'localStorage', { value: localStorageMock })
         window.localStorage.setItem('user', JSON.stringify({
-          type: 'employee',
+          type: 'Employee',
           email: "employee@test.com"
         }))
         const root = document.createElement("div")
