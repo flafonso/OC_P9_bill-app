@@ -86,13 +86,8 @@ export default class {
   }
 
   handleEditTicket(e, bill, bills) {
-    console.log("+++ handleEditTicket() +++")
-    console.log(`this.counterEdit = ${this.counterEdit}`)
-    console.log(`this.id = ${this.id}`)
     if (this.counterEdit === undefined || this.id !== bill.id) this.counterEdit = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
-    console.log(`__this.counterEdit = ${this.counterEdit}`)
-    console.log(`__this.id = ${this.id}`)
     if (this.counterEdit % 2 === 0) {
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
@@ -113,8 +108,6 @@ export default class {
     $('#icon-eye-d').click(this.handleClickIconEye)
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
     $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
-    console.log(`_____this.counterEdit = ${this.counterEdit}`)
-    console.log("++++++")
   }
 
   handleAcceptSubmit = (e, bill) => {
@@ -138,10 +131,6 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
-    console.log("--- handleShowTickets() ---")
-    console.log(`this.counter = ${this.counter}`)
-    console.log(`this.index = ${this.index}`)
-    console.log(`index = ${index}`)
     if (this.counter === undefined || this.index !== index) {
       if ($(`#status-bills-container${index}`).html().trim() === "") {
         this.counter = 0
@@ -150,8 +139,6 @@ export default class {
       }
     }
     if (this.index === undefined || this.index !== index) this.index = index
-    console.log(`__this.counter = ${this.counter}`)
-    console.log(`__this.index = ${this.index}`)
     if (this.counter % 2 === 0) {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})
       $(`#status-bills-container${this.index}`)
@@ -163,14 +150,12 @@ export default class {
       .html("")
       this.counter ++
     }
-    console.log(`_____this.counter = ${this.counter}`)
     
     bills.forEach(bill => {
-      // here we specify the current container in the querySelector so as not to redo an eventListener on the open-bills of the other containers opened previously
+      // Bug Hunt : here we specify the current container in the querySelector so as not to redo an eventListener on the open-bills of the other containers opened previously
       $(`#status-bills-container${this.index} #open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
-    
-    console.log("------")
+
     return bills
 
   }

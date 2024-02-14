@@ -16,7 +16,6 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate })
   }
   handleChangeFile = e => {
-    // console.log("--- handleChangeFile() ---")
     e.preventDefault()
     const errorMsg = document.querySelector("#error-msg__input-file")
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
@@ -26,11 +25,8 @@ export default class NewBill {
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
-    // console.log(`file : ${file}`)
-    // console.log(`file.type : ${file.type}`)
-    // console.log(`filePath : ${filePath}`)
-    // console.log(`e.target : ${e.target}`)
 
+    // Bug Hunt : prevents the creation of a bill if the format is invalid and manages the display of an error message
     if (!["image/jpeg", "image/jpg", "image/png"].includes(file.type)) {
       e.target.value = null
       e.target.classList.remove("blue-border") 
@@ -42,7 +38,8 @@ export default class NewBill {
       e.target.classList.add("blue-border") 
       errorMsg.style.display = "none"
     }
-    
+    // ------------------------------------------------------
+
     this.store
       .bills()
       .create({
@@ -52,17 +49,13 @@ export default class NewBill {
         }
       })
       .then(({fileUrl, key}) => {
-        // console.log(`fileUrl : ${fileUrl}`)
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
-      // console.log("--- ---")
   }
   handleSubmit = e => {
-    // console.log("+++ handleChangeFile() +++")
     e.preventDefault()
-    // console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(localStorage.getItem("user")).email
     const bill = {
       email,
@@ -79,7 +72,6 @@ export default class NewBill {
     }
     this.updateBill(bill)
     this.onNavigate(ROUTES_PATH['Bills'])
-    // console.log("+++ +++")
   }
 
   // not need to cover this function by tests

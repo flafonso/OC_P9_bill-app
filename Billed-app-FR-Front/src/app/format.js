@@ -13,7 +13,7 @@ export const formatStatus = (status) => {
       return "En attente"
     case "accepted":
       return "Accepté"
-    case "refused":
+    default :
       return "Refused"
   }
 }
