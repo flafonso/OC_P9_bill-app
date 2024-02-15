@@ -10,7 +10,7 @@ const row = (bill) => {
     <tr>
       <td>${bill.type}</td>
       <td>${bill.name}</td>
-      <td>${typeof jest !== 'undefined' ? bill.date :  formatDate(bill.date)}</td>
+      <td>${formatDate(bill.date)}</td>
       <td>${bill.amount} €</td>
       <td>${bill.status}</td>
       <td>

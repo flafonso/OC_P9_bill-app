@@ -14,6 +14,8 @@ import router from "../app/Router.js"
 import Bills from "../containers/Bills.js"
 jest.mock("../app/Store.js", () => mockStore)
 
+import { reverseFormatDate } from "../app/format.js"
+
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then icon-window in vertical layout should be highlighted", async () => {
@@ -44,9 +46,8 @@ describe("Given I am connected as an employee", () => {
       document.body.innerHTML = BillsUI({ data: bills })
 
       // Get all bill dates and sort them in reverse chronological order
-      const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
-      const antiChrono = (a, b) => ((a < b) ? 1 : -1)
-      const datesSorted = [...dates].sort(antiChrono)
+      const dates = screen.getAllByText(/^(0?[1-9]|[12][0-9]|3[01])\s(Janv\.|Févr\.|Mars|Avr\.|Mai|Juin|Juil\.|Août|Sept\.|Oct\.|Nov\.|Déc\.)\s\d{4}$/i).map(a => a.innerHTML)
+      const datesSorted = [...dates].sort((a, b) => reverseFormatDate(b) - reverseFormatDate(a))
 
       // Check if bill dates are in reverse chronological order
       expect(dates).toEqual(datesSorted)
@@ -146,7 +147,7 @@ describe("Given I am a user connected as employee", () => {
       expect(contentType).toBeTruthy()
       const contentName = screen.getByText("test1")
       expect(contentName).toBeTruthy()
-      const contentDate = screen.getByText("2003-03-03")
+      const contentDate = screen.getByText("3 Mars 2003")
       expect(contentDate).toBeTruthy()
       const contentAmount = screen.getByText("200 €")
       expect(contentAmount).toBeTruthy()
